@@ -1,27 +1,32 @@
 import React from 'react'
+import { Navbar, Container, Nav, Form, Button, Badge } from 'react-bootstrap'
 
 function NavbarComponent() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container px-4 px-lg-5">
-                <a className="navbar-brand" href="#!">Global</a>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon"></span></button>
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li className="nav-item"><a className="nav-link active" aria-current="page" href="#!">Home</a></li>
-                        <li className="nav-item"><a className="nav-link" href="#!">About</a></li>
-                    </ul>
-                    <form className="d-flex">
-                        <button className="btn btn-outline-dark" type="submit">
-                            <i className="bi-cart-fill me-1"></i>
-                            Cart
-                            <span className="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </nav>
-  )
+    <Navbar expand="lg" className=" navbar-light bg-light">
+      <Container className="px-4 px-lg-5">
+        <Navbar.Brand href="/">Global</Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbar-nav" />
+        <Navbar.Collapse id="navbar-nav">
+          <Nav className="me-auto mb-2 mb-lg-0 ms-lg-4">
+            <Nav.Link href="#!" active>
+              Home
+            </Nav.Link>
+            <Nav.Link href="#!">About</Nav.Link>
+          </Nav>
+          <Form className="d-flex">
+            <Button variant="outline-dark" type="submit">
+              <i className="bi-cart-fill me-1"></i>
+              Cart
+              <Badge bg="dark" text="white" className="ms-1 rounded-pill">
+                0
+              </Badge>
+            </Button>
+          </Form>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
 }
 
 export default NavbarComponent

@@ -1,4 +1,5 @@
 import React from "react";
+import { Container, Row, Col, Image } from "react-bootstrap";
 
 function PopularDestinationsComponent() {
   const data = [
@@ -36,14 +37,11 @@ function PopularDestinationsComponent() {
 
   function createCard(city) {
     return (
-      <div
-        className="position-relative overflow-hidden rounded"
+      <Container
+        className="px-0 position-relative overflow-hidden rounded"
         style={{ height: "200px" }}
       >
-        <img
-          src={city.image}
-          className="w-100 h-100 object-fit-cover"
-        />
+        <Image src={city.image} className="w-100 h-100 object-fit-cover" />
         <p
           className="position-absolute top-0 start-0 text-white fw-bold fs-4 p-4"
           style={{
@@ -52,23 +50,23 @@ function PopularDestinationsComponent() {
         >
           {city.title}
         </p>
-      </div>
+      </Container>
     );
   }
 
   return (
-    <div className="container py-5">
+    <Container className=" py-5">
       <h4 className="mb-3">Popular Destinations</h4>
-      <div className="row mb-2 gx-2">
-        <div className="col-6">{createCard(data[0])}</div>
-        <div className="col-6">{createCard(data[1])}</div>
-      </div>
-      <div className="row gx-2">
-        <div className="col-4">{createCard(data[2])}</div>
-        <div className="col-4">{createCard(data[3])}</div>
-        <div className="col-4">{createCard(data[4])}</div>
-      </div>
-    </div>
+      <Row className="mb-2 gx-2">
+        <Col xs={6}>{createCard(data[0])}</Col>
+        <Col xs={6}>{createCard(data[1])}</Col>
+      </Row>
+      <Row className="gx-2">
+        <Col xs={4}>{createCard(data[2])}</Col>
+        <Col xs={4}>{createCard(data[3])}</Col>
+        <Col xs={4}>{createCard(data[4])}</Col>
+      </Row>
+    </Container>
   );
 }
 

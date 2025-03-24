@@ -1,4 +1,13 @@
 import React, { useState } from "react";
+import {
+  Container,
+  Form,
+  Button,
+  Row,
+  Col,
+  Dropdown,
+  DropdownMenu,
+} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function SearchComponent() {
@@ -124,74 +133,78 @@ function SearchComponent() {
   function handleSearch(e) {
     e.preventDefault();
     console.log(departureLocation, arrivalLocation, departureDate, returnDate);
-    navigator(`/results?departure=${departureLocation}&arival=${arrivalLocation}&date=${departureDate}`)
+    navigator(
+      `/results?departure=${departureLocation}&arival=${arrivalLocation}&date=${departureDate}`
+    );
   }
 
   return (
-    <div className="col-9 bg-white shadow p-3 pt-2 rounded">
-      <form>
-        <div className="row">
-          <div className="col-3">
-            <label className="form-label">Departure location</label>
-            <select
-              className="form-select"
-              value={departureLocation}
-              onChange={(e) => setDepartureLocation(e.target.value)}
+    <Container className="bg-white shadow p-3 pt-2 rounded">
+      <Form>
+        <Row>
+          <Col xs={3} className="flex flex-row ">
+            <Form.Label>Departure location</Form.Label>
+            <Dropdown
+              onSelect={(selectedKey) => setDepartureLocation(selectedKey)}
             >
-              <option value={""} onChange={""}>
-                Select a city
-              </option>{" "}
-              {europeanCities.map((city) => (
-                <option key={city} value={city}>
-                  {city}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="col-3">
-            <label className="form-label">Departure location</label>
-            <select
-              className="form-select"
-              value={arrivalLocation}
-              onChange={(e) => setArrivalLocation(e.target.value)}
+              <Dropdown.Toggle variant="outline-dark" className="w-100">
+                {departureLocation || "Select a city"}
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                {europeanCities.map((city) => (
+                  <Dropdown.Item key={city} eventKey={city}>
+                    {city}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
+          <Col xs={3}>
+            <Form.Label>Departure location</Form.Label>
+            <Dropdown
+              onSelect={(selectedKey) => setArrivalLocation(selectedKey)}
             >
-              <option value={""} onChange={""}>
-                Select a city
-              </option>{" "}
-              {europeanCities.map((city) => (
-                <option key={city} value={city}>
-                  {city}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="col-2">
-            <label className="form-label">Departure date</label>
-            <input
+              <Dropdown.Toggle variant="outline-dark" className="w-100">
+                {arrivalLocation || "Select a city"}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {europeanCities.map((city) => (
+                  <Dropdown.Item key={city} eventKey={city}>
+                    {city}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
+          <Col xs={2}>
+            <Form.Label>Departure date</Form.Label>
+            <Form.Control
               type="date"
-              className="form-control shadow-none"
+              className="border border-dark bg-white text-dark"
               onChange={(e) => setDepartureDate(e.target.value)}
             />
-          </div>
-          <div className="col-2 ">
-            <label className="form-label">Return date</label>
-            <input
+          </Col>
+          <Col xs={2}>
+            <Form.Label>Arrival date</Form.Label>{" "}
+            <Form.Control
               type="date"
-              className="form-control shadow-none"
+              className="border border-dark bg-white text-dark"
               onChange={(e) => setReturnDate(e.target.value)}
             />
-          </div>
-          <div className="col-2 d-flex flex-column">
-            <button
-              className="btn btn-primary mt-auto"
+          </Col>
+          <Col xs={2} className="d-flex flex-column">
+            <Button
+              variant="primary"
+              className="mt-auto"
               onClick={(e) => handleSearch(e)}
             >
               Search Tickets
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+    </Container>
   );
 }
 

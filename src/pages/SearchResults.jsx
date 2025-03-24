@@ -3,6 +3,8 @@ import HeaderComponent from "../components/HeaderComponent";
 import { useSearchParams } from "react-router-dom";
 import NavbarComponent from "../components/NavbarComponent";
 import TicketsComponent from "../components/TicketsComponent";
+import MapComponent from "../components/MapComponent"
+import { Container } from "react-bootstrap";
 
 function SearchResults() {
   const [searchParams] = useSearchParams();
@@ -22,11 +24,14 @@ function SearchResults() {
     console.log(returnDate);
   }, [searchParams]);
   return (
-    <div>
+    <Container fluid className="px-0">
       <NavbarComponent />
       <HeaderComponent />
-      <TicketsComponent />
-    </div>
+      <Container className="col-5 py-5">
+        {/* <MapComponent /> */}
+        <TicketsComponent />
+      </Container>
+    </Container>
   );
 }
 

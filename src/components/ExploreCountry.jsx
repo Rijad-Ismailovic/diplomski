@@ -1,4 +1,5 @@
 import React from "react";
+import { Container, Image as RBImage} from "react-bootstrap";
 
 function ExploreCountry() {
   const currentCountry = "Bosnia and Hercegovina";
@@ -54,33 +55,33 @@ function ExploreCountry() {
 
   function createCard(location, index) {
     return (
-      <div
-        className="overflow-hidden text-center flex-shrink-0"
+      <Container
+        className="px-0 overflow-hidden text-center flex-shrink-0 "
         style={{ width: "150px" }}
         key={index}
       >
-        <div style={{ height: "150px" }}>
-          <img
-            className="w-100 h-100 object-fit-cover rounded"
+        <Container className="px-0" style={{ height: "150px" }}>
+          <RBImage
+            className="w-100 h-100 object-fit-cover rounded border"
             src={location.image}
             style={{
-              filter: "blur(0.3px)", 
+              filter: "blur(0.3px)",
             }}
           />
-        </div>
-        <div className="mt-1">
+        </Container>
+        <Container className="px-0 mt-1">
           <p className="mb-0 fw-bold">{location.title}</p>
           <p className="text-muted fw-light small">10km away from Sarajevo</p>
-        </div>
-      </div>
+        </Container>
+      </Container>
     );
   }
 
   return (
-    <div className="container py-2">
+    <Container className="py-2">
       <h4 className="mb-3">Explore {currentCountry}</h4>
-      <div
-        className="d-flex justify-content-start gap-3 flex-nowrap overflow-scroll"
+      <Container
+        className="px-0 d-flex justify-content-start gap-3 flex-nowrap overflow-scroll"
         style={{
           WebkitOverflowScrolling: "touch",
           scrollBehavior: "smooth",
@@ -89,8 +90,8 @@ function ExploreCountry() {
         }}
       >
         {data.map((location, index) => createCard(location, index))}
-      </div>
-    </div>
+      </Container>
+    </Container>
   );
 }
 
