@@ -78,7 +78,7 @@ function ExploreCountry() {
   }
 
   return (
-    <Container className="py-2">
+    <Container className="py-5">
       <h4 className="mb-3">Explore {currentCountry}</h4>
       <Container
         className="px-0 d-flex justify-content-start gap-3 flex-nowrap overflow-scroll"

@@ -6,9 +6,9 @@ function NavbarComponent() {
     <Navbar expand="lg" className=" navbar-light bg-light">
       <Container className="px-4 px-lg-5">
         <Navbar.Brand href="/">Global</Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbar-nav" />
+        <Navbar.Toggle aria-controls="navbar-nav " />
         <Navbar.Collapse id="navbar-nav">
-          <Nav className="me-auto mb-2 mb-lg-0 ms-lg-4">
+          <Nav className="me-auto mb-2 mb-lg-0 ms-lg-4 ">
             <Nav.Link href="#!" active>
               Home
             </Nav.Link>

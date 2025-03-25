@@ -3,8 +3,12 @@ import HeaderComponent from "../components/HeaderComponent";
 import { useSearchParams } from "react-router-dom";
 import NavbarComponent from "../components/NavbarComponent";
 import TicketsComponent from "../components/TicketsComponent";
-import MapComponent from "../components/MapComponent"
-import { Container } from "react-bootstrap";
+import MapComponent from "../components/MapComponent";
+import { Container, Row, Col, Image } from "react-bootstrap";
+import FilterComponent from "../components/FilterComponent";
+
+import bannerImage from "../assets/homepage/satisfied_customers/idris_cropped.jpg"
+import BannerSearchComponent from "../components/BannerSearchComponent";
 
 function SearchResults() {
   const [searchParams] = useSearchParams();
@@ -27,9 +31,20 @@ function SearchResults() {
     <Container fluid className="px-0">
       <NavbarComponent />
       <HeaderComponent />
-      <Container className="col-5 py-5">
+      <Container
+        className="col-7 py-5"
+        style={{ marginLeft: "300px", marginRight: "300px" }}
+      >
         {/* <MapComponent /> */}
-        <TicketsComponent />
+        <BannerSearchComponent />
+        <Row>
+          <Col lg={4}>
+            <FilterComponent />
+          </Col>
+          <Col lg={8} className="px-0">
+            <TicketsComponent />
+          </Col>
+        </Row>
       </Container>
     </Container>
   );

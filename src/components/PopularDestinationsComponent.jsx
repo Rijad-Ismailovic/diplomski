@@ -55,7 +55,7 @@ function PopularDestinationsComponent() {
   }
 
   return (
-    <Container className=" py-5">
+    <Container>
       <h4 className="mb-3">Popular Destinations</h4>
       <Row className="mb-2 gx-2">
         <Col xs={6}>{createCard(data[0])}</Col>

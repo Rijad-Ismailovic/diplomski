@@ -57,7 +57,7 @@ function TicketsComponent() {
             <Col className="d-flex flex-column align-items-end mt-auto">
               <p className="mb-1 fw-bold">35 KM</p>
               <Button variant="primary" size="sm" href="/buy/mostar">
-                Buy
+                View
               </Button>
             </Col>
           </CardBody>

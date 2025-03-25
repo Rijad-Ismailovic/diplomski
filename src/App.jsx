@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import HeaderComponent from './components/HeaderComponent'
-import NavbarComponent from './components/NavbarComponent';
-import PopularDestinationsComponent from './components/PopularDestinationsComponent';
+import { useState } from "react";
+import HeaderComponent from "./components/HeaderComponent";
+import NavbarComponent from "./components/NavbarComponent";
+import PopularDestinationsComponent from "./components/PopularDestinationsComponent";
 import FooterComponent from "./components/FooterComponent";
-import Homepage from './pages/Homepage';
-import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
-import SearchResults from './pages/SearchResults';
+import Homepage from "./pages/Homepage";
+import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import SearchResults from "./pages/SearchResults";
 
 function App() {
   return (
@@ -20,4 +20,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
