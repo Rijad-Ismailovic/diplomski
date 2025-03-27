@@ -15,7 +15,7 @@ function SearchResults() {
   const [departureLocation, setDepartureLocation] = useState("");
   const [arrivalLocation, setArrivalLocation] = useState("");
   const [departureDate, setDepartureDate] = useState("");
-  const [returnDate, setReturnDate] = useState("");
+  const [returnDate, setReturnDate  ] = useState("");
 
   useEffect(() => {
     setDepartureLocation(searchParams.get("departure") || "");

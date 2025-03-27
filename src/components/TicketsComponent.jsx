@@ -27,9 +27,9 @@ function TicketsComponent() {
 
   function createCard(ticket, index) {
     return (
-      <Container key={index} className="mb-3 px-0">
+      <Container key={index} className="mb-3 px-0 bg-light">
         <Card className="shadow-sm position-relative">
-          <CardBody className="d-flex align-items-start gap-3">
+          <CardBody className="d-flex align-items-start gap-3 bg-light">
             <Col
               xs={2}
               style={{ width: "80px", height: "80px" }}

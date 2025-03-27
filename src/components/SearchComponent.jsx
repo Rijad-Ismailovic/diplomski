@@ -139,7 +139,7 @@ function SearchComponent() {
   }
 
   return (
-    <Container className="bg-white shadow p-3 pt-2 rounded">
+    <Container className="bg-light shadow p-3 pt-2 rounded">
       <Form>
         <Row>
           <Col xs={3} className="flex flex-row ">
