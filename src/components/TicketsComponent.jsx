@@ -10,6 +10,7 @@ import {
   Stack,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import TicketModal from "./TicketModal";
 
 function TicketsComponent() {
   const data = [
@@ -56,9 +57,7 @@ function TicketsComponent() {
 
             <Col className="d-flex flex-column align-items-end mt-auto">
               <p className="mb-1 fw-bold">35 KM</p>
-              <Button variant="primary" size="sm" href="/buy/mostar">
-                View
-              </Button>
+              <TicketModal />
             </Col>
           </CardBody>
         </Card>

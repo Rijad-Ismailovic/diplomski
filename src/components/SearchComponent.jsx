@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  Container,
-  Form,
-  Button,
-  Row,
-  Col,
-  Dropdown,
-  DropdownMenu,
-} from "react-bootstrap";
+import { Container, Form, Button, Row, Col, Dropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function SearchComponent() {
@@ -139,15 +131,18 @@ function SearchComponent() {
   }
 
   return (
-    <Container className="bg-light shadow p-3 pt-2 rounded">
-      <Form>
-        <Row>
-          <Col xs={3} className="flex flex-row ">
+    <Container className="bg-light shadow p-4 rounded">
+      <Form onSubmit={handleSearch}>
+        <Row className="g-3">
+          <Col xs={12} sm={6} md={3}>
             <Form.Label>Departure location</Form.Label>
             <Dropdown
               onSelect={(selectedKey) => setDepartureLocation(selectedKey)}
             >
-              <Dropdown.Toggle variant="outline-dark" className="w-100">
+              <Dropdown.Toggle
+                variant="outline-dark"
+                className="w-100 text-start"
+              >
                 {departureLocation || "Select a city"}
               </Dropdown.Toggle>
 
@@ -160,14 +155,19 @@ function SearchComponent() {
               </Dropdown.Menu>
             </Dropdown>
           </Col>
-          <Col xs={3}>
-            <Form.Label>Departure location</Form.Label>
+
+          <Col xs={12} sm={6} md={3}>
+            <Form.Label>Arrival location</Form.Label>
             <Dropdown
               onSelect={(selectedKey) => setArrivalLocation(selectedKey)}
             >
-              <Dropdown.Toggle variant="outline-dark" className="w-100">
+              <Dropdown.Toggle
+                variant="outline-dark"
+                className="w-100 text-start"
+              >
                 {arrivalLocation || "Select a city"}
               </Dropdown.Toggle>
+
               <Dropdown.Menu>
                 {europeanCities.map((city) => (
                   <Dropdown.Item key={city} eventKey={city}>
@@ -177,7 +177,8 @@ function SearchComponent() {
               </Dropdown.Menu>
             </Dropdown>
           </Col>
-          <Col xs={2}>
+
+          <Col xs={12} sm={6} md={2}>
             <Form.Label>Departure date</Form.Label>
             <Form.Control
               type="date"
@@ -185,20 +186,18 @@ function SearchComponent() {
               onChange={(e) => setDepartureDate(e.target.value)}
             />
           </Col>
-          <Col xs={2}>
-            <Form.Label>Arrival date</Form.Label>{" "}
+
+          <Col xs={12} sm={6} md={2}>
+            <Form.Label>Return date</Form.Label>
             <Form.Control
               type="date"
               className="border border-dark bg-white text-dark"
               onChange={(e) => setReturnDate(e.target.value)}
             />
           </Col>
-          <Col xs={2} className="d-flex flex-column">
-            <Button
-              variant="primary"
-              className="mt-auto"
-              onClick={(e) => handleSearch(e)}
-            >
+
+          <Col xs={12} md={2} className="d-flex align-items-end">
+            <Button variant="primary" type="submit" className="w-100">
               Search Tickets
             </Button>
           </Col>

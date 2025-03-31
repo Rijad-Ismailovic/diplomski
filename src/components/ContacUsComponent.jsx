@@ -1,40 +1,48 @@
 import React from "react";
 import { Container, Form, Row, Col, Button } from "react-bootstrap";
 
-function ContacUsComponent() {
+function ContactUsComponent() {
   return (
-    <Container fluid className="text-center bg-dark">
-      <h3 className="pt-4 text-white">Contact us</h3>
-      <p className="text-white">
-        For any questions about our services, please contatct us and we will get
-        back to you.
+    <Container fluid className="text-center bg-dark text-white py-5">
+      <h3 className="mb-3">Contact Us</h3>
+      <p className="mb-4">
+        For any questions about our services, please contact us and we will get
+        back to you as soon as possible.
       </p>
       <Form>
         <Row className="justify-content-center">
-          <Col lg={8}>
-            <Row>
-              <Form.Group className="mb-3">
-                <Form.Label>Your Message</Form.Label>
+          <Col xs={12} md={10} lg={8}>
+            {/* Message Textarea */}
+            <Form.Group className="mb-4 text-start">
+              <Form.Label>Your Message</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={5}
+                placeholder="Ask us any of your questions"
+                className="bg-light"
+              />
+            </Form.Group>
+
+            {/* Email, Name, and Submit Button */}
+            <Row className="g-3">
+              <Col xs={12} sm={6} md={5}>
                 <Form.Control
-                  as="textarea"
-                  rows={5}
-                  placeholder="Ask us any of your questions"
-                ></Form.Control>
-              </Form.Group>
-            </Row>
-            <Row className="p t-0">
-              <Col xl={5}>
-                <Form.Group>
-                  <Form.Control type="email" placeholder="name@example.com" />
-                </Form.Group>
+                  type="email"
+                  placeholder="name@example.com"
+                  className="bg-light"
+                />
               </Col>
-              <Col xl={5}>
-                <Form.Group>
-                  <Form.Control type="text" placeholder="FirstName LastName" />
-                </Form.Group>
+              <Col xs={12} sm={6} md={5}>
+                <Form.Control
+                  type="text"
+                  placeholder="FirstName LastName"
+                  className="bg-light"
+                />
               </Col>
-              <Col xl={2}>
-                <Button className="w-100">Submit</Button>
+              <Col xs={12} md={2}>
+                <Button variant="primary" type="submit" className="w-100">
+                  Submit
+                </Button>
               </Col>
             </Row>
           </Col>
@@ -44,4 +52,4 @@ function ContacUsComponent() {
   );
 }
 
-export default ContacUsComponent;
+export default ContactUsComponent;

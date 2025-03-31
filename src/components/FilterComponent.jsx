@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Container, Form, Row, Col } from "react-bootstrap";
 
 function FilterComponent() {
-  const [price, setPrice] = useState(150);
-  const [duration, setDuration] = useState(3);
+  const [price, setPrice] = useState(300);
+  const [duration, setDuration] = useState(24);
   const [features, setFeatures] = useState({
     wifi: false,
     restroom: false,
