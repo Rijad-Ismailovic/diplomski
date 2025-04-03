@@ -25,7 +25,7 @@ public class DriverDto {
     private String password;
     private LocalDate hireDate;
     private DriverStatus status;
-    private int years_of_experience;
+    private int yearsOfExperience;
     private double monthlySalary;
     private int numOfCompletedTrips;
     private double averageRating;

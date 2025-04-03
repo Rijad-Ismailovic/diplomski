@@ -54,6 +54,7 @@ public class Trip {
     private int durationMinutes;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private TripStatus tripStatus;
 
     @Column(name = "num_of_seats")

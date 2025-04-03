@@ -40,9 +40,11 @@ public class Vehicle {
     private String manufacturer;
 
     @Column(name = "fuel_type")
+    @Enumerated(EnumType.STRING)
     private Fuel fuelType;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private VehicleStatus status;
 
     @Column(name = "mileage_km")

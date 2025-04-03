@@ -45,10 +45,11 @@ public class Driver {
     private LocalDate hireDate;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private DriverStatus status;
 
     @Column(name = "years_of_experience")
-    private int years_of_experience;
+    private int yearsOfExperience;
 
     @Column(name = "monthly_salary")
     private double monthlySalary;

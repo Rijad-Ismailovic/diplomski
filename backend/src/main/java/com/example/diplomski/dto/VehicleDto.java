@@ -18,7 +18,7 @@ import java.time.LocalDate;
 public class VehicleDto {
     private Long id;
     private int numOfSeats;
-    private double fuelCapacity;
+    private double fuelCapacityLiters;
     private String licensePlate;
     private int yearOfManufacture;
     private String model;
