@@ -21,7 +21,7 @@ public class TripDto {
     private LocalTime departureTime;
     private LocalDate departureDate;
     private String arrivalLocation;
-    private LocalDate arrivalTime;
+    private LocalTime arrivalTime;
     private LocalDate arrivalDate;
     private int distanceKm;
     private int durationMinutes;

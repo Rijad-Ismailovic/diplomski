@@ -11,7 +11,7 @@ public interface DriverService {
 
     DriverDto createDriver(DriverDto driverDto);
 
-    DriverDto updateVehicle(Long id, DriverDto driverDto);
+    DriverDto updateDriver(Long id, DriverDto driverDto);
 
     void deleteDriver(Long id);
 }

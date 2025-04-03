@@ -39,7 +39,7 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public DriverDto updateVehicle(Long id, DriverDto driverDto) {
+    public DriverDto updateDriver(Long id, DriverDto driverDto) {
         Driver existingDriver = driverRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Driver with given ID doesnt exist: " + id));
 
         BeanUtils.copyProperties(driverDto, existingDriver, "id");

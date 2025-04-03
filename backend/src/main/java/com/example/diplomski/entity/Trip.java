@@ -42,7 +42,7 @@ public class Trip {
     private String arrivalLocation;
 
     @Column(name = "arrival_time")
-    private LocalDate arrivalTime;
+    private LocalTime arrivalTime;
 
     @Column(name = "arrival_date")
     private LocalDate arrivalDate;
