@@ -3,117 +3,25 @@ import { Container, Form, Button, Row, Col, Dropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function SearchComponent() {
-  const europeanCities = [
-    "London",
-    "Berlin",
-    "Madrid",
-    "Rome",
-    "Paris",
-    "Vienna",
-    "Amsterdam",
-    "Brussels",
-    "Lisbon",
-    "Stockholm",
-    "Oslo",
-    "Copenhagen",
-    "Helsinki",
-    "Dublin",
-    "Warsaw",
-    "Prague",
-    "Budapest",
-    "Bucharest",
-    "Athens",
-    "Belgrade",
-    "Zagreb",
-    "Ljubljana",
-    "Bratislava",
-    "Sofia",
-    "Tallinn",
-    "Riga",
-    "Vilnius",
-    "Luxembourg",
-    "Reykjavik",
+  const bosnianCities = [
     "Sarajevo",
-    "Skopje",
-    "Podgorica",
-    "Tirana",
-    "Valletta",
-    "Chisinau",
-    "Monaco",
-    "San Marino",
-    "Andorra la Vella",
-    "Vatican City",
-    "Hamburg",
-    "Munich",
-    "Cologne",
-    "Frankfurt",
-    "Stuttgart",
-    "Dusseldorf",
-    "Barcelona",
-    "Valencia",
-    "Seville",
-    "Milan",
-    "Naples",
-    "Turin",
-    "Lyon",
-    "Marseille",
-    "Bordeaux",
-    "Nice",
-    "Rotterdam",
-    "The Hague",
-    "Antwerp",
-    "Ghent",
-    "Geneva",
-    "Zurich",
-    "Basel",
-    "Krakow",
-    "Gdansk",
-    "Wroclaw",
-    "Lodz",
-    "Poznan",
-    "Cluj-Napoca",
-    "Timisoara",
-    "Constanta",
-    "Thessaloniki",
-    "Patras",
-    "Birmingham",
-    "Manchester",
-    "Glasgow",
-    "Edinburgh",
-    "Leeds",
-    "Sheffield",
-    "Liverpool",
-    "Brno",
-    "Ostrava",
-    "Kosice",
-    "Debrecen",
-    "Graz",
-    "Salzburg",
-    "Innsbruck",
-    "Malmo",
-    "Gothenburg",
-    "Uppsala",
-    "Aarhus",
-    "Odense",
-    "Bergen",
-    "Trondheim",
-    "Tampere",
-    "Turku",
-    "Kaunas",
-    "Tartu",
-    "Split",
-    "Dubrovnik",
-    "Kotor",
+    "Banja Luka",
+    "Tuzla",
+    "Zenica",
     "Mostar",
-    "Novi Sad",
-    "Lviv",
-    "Odessa",
-    "Dnipro",
-    "Kharkiv",
-    "Istanbul",
-    "Izmir",
-    "Ankara",
+    "Bihać",
+    "Brčko",
+    "Prijedor",
+    "Doboj",
+    "Bijeljina",
+    "Trebinje",
+    "Travnik",
+    "Cazin",
+    "Gradačac",
+    "Goražde",
+    "Zvornik",
   ];
+
 
   const navigator = useNavigate();
 
@@ -124,9 +32,15 @@ function SearchComponent() {
 
   function handleSearch(e) {
     e.preventDefault();
-    console.log(departureLocation, arrivalLocation, departureDate, returnDate);
+    
+    const params = new URLSearchParams()
+
+    if (departureLocation) params.append("departure", departureLocation)
+    if (arrivalLocation) params.append("arrival", arrivalLocation)
+    if (departureDate) params.append("departureDate", departureDate)
+    if (returnDate) params.append("returnDate", returnDate)
     navigator(
-      `/results?departure=${departureLocation}&arival=${arrivalLocation}&date=${departureDate}`
+      `/search?${params.toString()}`
     );
   }
 
@@ -147,7 +61,7 @@ function SearchComponent() {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                {europeanCities.map((city) => (
+                {bosnianCities.map((city) => (
                   <Dropdown.Item key={city} eventKey={city}>
                     {city}
                   </Dropdown.Item>
@@ -169,7 +83,7 @@ function SearchComponent() {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                {europeanCities.map((city) => (
+                {bosnianCities.map((city) => (
                   <Dropdown.Item key={city} eventKey={city}>
                     {city}
                   </Dropdown.Item>

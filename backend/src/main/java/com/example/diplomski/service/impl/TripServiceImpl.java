@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,5 +62,15 @@ public class TripServiceImpl implements TripService {
     @Override
     public void deleteTrip(Long id) {
         tripRepository.deleteById(id);
+    }
+
+    @Override
+    public List<TripDto> search(String departure, String arrival, LocalDate arrivalDate, LocalDate returnDate) {
+        if (departure != null && departure.trim().isEmpty()) departure = null;
+        if (arrival != null && arrival.trim().isEmpty()) arrival = null;
+
+        List<Trip> trips = tripRepository.search(departure, arrival, arrivalDate, returnDate);
+        return trips.stream().map((trip) -> TripMapper.mapToTripDto(trip)).collect(Collectors.toList());
+
     }
 }

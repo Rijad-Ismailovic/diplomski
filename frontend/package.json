@@ -12,6 +12,7 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "@vis.gl/react-google-maps": "^1.5.2",
+    "axios": "^1.8.4",
     "bootstrap": "^5.3.3",
     "bus_transport_management_system": "file:",
     "react": "^19.0.0",

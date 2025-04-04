@@ -5,23 +5,17 @@ import { Container, Row, Col } from "react-bootstrap";
 import HeaderComponent from "../components/HeaderComponent";
 import NavbarComponent from "../components/NavbarComponent";
 import TicketsComponent from "../components/TicketsComponent";
-import MapComponent from "../components/MapComponent";
 import FilterComponent from "../components/FilterComponent";
 import BannerSearchComponent from "../components/BannerSearchComponent";
 
 function SearchResults() {
   const [searchParams] = useSearchParams();
-  const [departureLocation, setDepartureLocation] = useState("");
-  const [arrivalLocation, setArrivalLocation] = useState("");
-  const [departureDate, setDepartureDate] = useState("");
-  const [returnDate, setReturnDate] = useState("");
-
-  useEffect(() => {
-    setDepartureLocation(searchParams.get("departure") || "");
-    setArrivalLocation(searchParams.get("arrival") || "");
-    setDepartureDate(searchParams.get("date") || "");
-    setReturnDate(searchParams.get("rdate") || "");
-  }, [searchParams]);
+  const query = {
+    departure: searchParams.get("departure") || "",
+    arrival: searchParams.get("arrival") || "",
+    departureDate: searchParams.get("departureDate") || "",
+    returnDate: searchParams.get("returnDate") || "",
+  };
 
   return (
     <Container fluid className="px-0">
@@ -43,7 +37,7 @@ function SearchResults() {
             <FilterComponent />
           </Col>
           <Col xs={12} lg={8} className="px-0">
-            <TicketsComponent />
+            <TicketsComponent query={query} />
           </Col>
         </Row>
       </Container>

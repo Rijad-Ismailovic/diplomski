@@ -4,10 +4,12 @@ import com.example.diplomski.dto.TripDto;
 import com.example.diplomski.service.TripService;
 import com.example.diplomski.service.impl.TripServiceImpl;
 import lombok.AllArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -44,6 +46,15 @@ public class TripController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTrip(@PathVariable("id") Long id){
         tripService.deleteTrip(id);
-        return ResponseEntity.ok("Trip with given ID deleted succesfully: " + id);
+        return ResponseEntity.ok("Trip with given ID deleted successfully: " + id);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> search(@RequestParam(name = "departure", required = false) String departureLocation,
+                                    @RequestParam(name = "arrival", required = false) String arrivalLocation,
+                                    @RequestParam(name = "departureDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate departureDate,
+                                    @RequestParam(name = "returnDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate returnDate){
+        List<TripDto> trips = tripService.search(departureLocation, arrivalLocation, departureDate, returnDate);
+        return ResponseEntity.ok(trips);
     }
 }

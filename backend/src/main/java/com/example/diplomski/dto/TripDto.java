@@ -23,6 +23,8 @@ public class TripDto {
     private String arrivalLocation;
     private LocalTime arrivalTime;
     private LocalDate arrivalDate;
+    private LocalDate returnDate;
+    private LocalTime returnTime;
     private int distanceKm;
     private int durationMinutes;
     private TripStatus tripStatus;

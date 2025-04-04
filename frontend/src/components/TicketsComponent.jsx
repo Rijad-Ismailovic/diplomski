@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router";
+
 import {
   Container,
   Col,
@@ -9,24 +11,42 @@ import {
   CardBody,
   Stack,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import TicketModal from "./TicketModal";
+import { getAllTrips, search } from "../services/TripService";
+import { mapToHHMM } from "../utils/timeUtils";
 
-function TicketsComponent() {
-  const data = [
-    {
-      title: "Mostar",
-      image:
-        "https://upload.wikimedia.org/wikipedia/commons/d/d7/Mostar_Old_Town_Panorama_2007.jpg",
-    },
-    {
-      title: "Mostar",
-      image:
-        "https://upload.wikimedia.org/wikipedia/commons/d/d7/Mostar_Old_Town_Panorama_2007.jpg",
-    },
-  ];
+function TicketsComponent({query}) {
+  const [data, setData] = useState([])
 
-  function createCard(ticket, index) {
+  useEffect(() => {
+    const hasQuery = query.departure || query.arrival || query.departureDate || query.returnDate
+    
+    if (hasQuery) {
+      search(
+        query.departure,
+        query.arrival,
+        query.departureDate,
+        query.returnDate
+      )
+        .then((response) => {
+          setData(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      getAllTrips()
+        .then((response) => {
+          setData(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+    
+  }, [query]);
+
+  function createCard(trip, index) {
     return (
       <Container key={index} className="mb-3 px-0 bg-light">
         <Card className="shadow-sm position-relative">
@@ -37,7 +57,7 @@ function TicketsComponent() {
               className="px-0 rounded overflow-hidden"
             >
               <Image
-                src={ticket.image}
+                src={trip.image}
                 fluid
                 className="w-100 h-100 object-fit-cover"
                 style={{ filter: "blur(0.3px)" }}
@@ -46,17 +66,22 @@ function TicketsComponent() {
 
             <Col className="flex-grow-1 d-flex flex-column justify-content-between">
               <Card.Title className="mb-2 fs-6">
-                Sarajevo <span className="text-primary">&rarr;</span>{" "}
-                {ticket.title}
+                {trip.departureLocation}{" "}
+                <span className="text-primary">&rarr;</span>{" "}
+                {trip.arrivalLocation}
               </Card.Title>
               <Row className="px-0 small text-muted mt-2">
-                <p className="mb-0">2hr 30min</p>
-                <p className="mb-0">10:00 - 12:30</p>
+                {/* <p className="mb-0">{mapToHHMM(trip.durationMinutes)}</p> */}
+                <p className="mb-0">{trip.departureDate}</p>
+                <p className="mb-0">
+                  {trip.departureTime.substring(0, 5)} -{" "}
+                  {trip.arrivalTime.substring(0, 5)}
+                </p>
               </Row>
             </Col>
 
             <Col className="d-flex flex-column align-items-end mt-auto">
-              <p className="mb-1 fw-bold">35 KM</p>
+              <p className="mb-1 fw-bold">{trip.price} KM</p>
               <TicketModal />
             </Col>
           </CardBody>

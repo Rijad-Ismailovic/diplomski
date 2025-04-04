@@ -47,6 +47,12 @@ public class Trip {
     @Column(name = "arrival_date")
     private LocalDate arrivalDate;
 
+    @Column(name = "return_date")
+    private LocalDate returnDate;
+
+    @Column(name = "return_time")
+    private LocalTime returnTime;
+
     @Column(name = "distance_km")
     private int distanceKm;
 

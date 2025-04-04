@@ -5,6 +5,6 @@ public enum DriverStatus {
     RETIRED,
     ACTIVE, // vozi
     SUSPENDED,
-    INCTIVE, // ne vozi ali u smjeni
+    INACTIVE, // ne vozi ali u smjeni
     OFF_DUTY // van radnog vremena
 }

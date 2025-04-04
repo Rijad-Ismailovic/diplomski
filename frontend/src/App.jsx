@@ -12,7 +12,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Homepage />}></Route>
-        <Route path="/results" element={<SearchResults />}></Route>
+        <Route path="/search" element={<SearchResults />}></Route>
         <Route path="/details/:id" element={<Homepage />} />
       </Routes>
       <FooterComponent />
