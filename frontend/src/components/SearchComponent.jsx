@@ -22,7 +22,6 @@ function SearchComponent() {
     "Zvornik",
   ];
 
-
   const navigator = useNavigate();
 
   const [departureLocation, setDepartureLocation] = useState("");

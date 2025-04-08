@@ -25,7 +25,12 @@ public class TripMapper {
               trip.getNumOfSeats(),
               trip.getNumOfAvailableSeats(),
               trip.getPrice(),
-              trip.getNotes()
+              trip.getNotes(),
+              trip.isHasWifi(),
+              trip.isHasRestroom(),
+              trip.isHasAc(),
+              trip.isHasOutlet(),
+              trip.isHasReclining()
         );
     }
 
@@ -48,7 +53,12 @@ public class TripMapper {
                 tripDto.getNumOfSeats(),
                 tripDto.getNumOfAvailableSeats(),
                 tripDto.getPrice(),
-                tripDto.getNotes()
+                tripDto.getNotes(),
+                tripDto.isHasWifi(),
+                tripDto.isHasRestroom(),
+                tripDto.isHasAc(),
+                tripDto.isHasOutlet(),
+                tripDto.isHasReclining()
         );
     }
 }

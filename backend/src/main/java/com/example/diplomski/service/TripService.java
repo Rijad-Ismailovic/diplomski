@@ -17,5 +17,16 @@ public interface TripService {
 
     void deleteTrip(Long id);
 
-    List<TripDto> search(String departure, String arrival, LocalDate arrivalDate, LocalDate returnDate);
+    List<TripDto> search(
+            String departure,
+            String arrival,
+            LocalDate arrivalDate,
+            LocalDate returnDate,
+            Boolean wifi,
+            Boolean restroom,
+            Boolean ac,
+            Boolean outlet,
+            Boolean reclining,
+            Integer maxPrice,
+            Integer maxDuration);
 }

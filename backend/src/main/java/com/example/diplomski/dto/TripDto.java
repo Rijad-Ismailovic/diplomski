@@ -1,6 +1,7 @@
 package com.example.diplomski.dto;
 
 import com.example.diplomski.common.enums.TripStatus;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,4 +33,9 @@ public class TripDto {
     private int numOfAvailableSeats;
     private double price;
     private String notes;
+    private boolean hasWifi;
+    private boolean hasRestroom;
+    private boolean hasAc;
+    private boolean hasOutlet;
+    private boolean hasReclining;
 }

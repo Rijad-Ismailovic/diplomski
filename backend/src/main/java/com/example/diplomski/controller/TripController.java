@@ -53,8 +53,17 @@ public class TripController {
     public ResponseEntity<?> search(@RequestParam(name = "departure", required = false) String departureLocation,
                                     @RequestParam(name = "arrival", required = false) String arrivalLocation,
                                     @RequestParam(name = "departureDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate departureDate,
-                                    @RequestParam(name = "returnDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate returnDate){
-        List<TripDto> trips = tripService.search(departureLocation, arrivalLocation, departureDate, returnDate);
+                                    @RequestParam(name = "returnDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate returnDate,
+                                    @RequestParam(name = "wifi", required = false) boolean wifi,
+                                    @RequestParam(name = "restroom", required = false) boolean restroom,
+                                    @RequestParam(name = "ac", required = false) boolean ac,
+                                    @RequestParam(name = "outlet", required = false) boolean outlet,
+                                    @RequestParam(name = "reclining", required = false) boolean reclining,
+                                    @RequestParam(name = "maxPrice", required = false) Integer maxPrice,
+                                    @RequestParam(name = "maxDuration", required = false) Integer maxDuration){
+        System.out.println(maxPrice);
+        System.out.println(maxDuration);
+        List<TripDto> trips = tripService.search(departureLocation, arrivalLocation, departureDate, returnDate, wifi, restroom, ac, outlet, reclining, maxPrice, maxDuration);
         return ResponseEntity.ok(trips);
     }
 }

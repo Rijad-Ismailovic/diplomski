@@ -8,7 +8,6 @@ import { useLocation } from "react-router";
 
 export default function HeaderComponent() {
   let location = useLocation();
-  console.log(location.pathname)
 
   return (
     <header

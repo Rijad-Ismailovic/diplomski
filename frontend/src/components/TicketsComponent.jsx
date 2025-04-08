@@ -1,51 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router";
+import React from "react";
 
-import {
-  Container,
-  Col,
-  Row,
-  Image,
-  Card,
-  Button,
-  CardBody,
-  Stack,
-} from "react-bootstrap";
+import { Container, Col, Row, Image, Card, CardBody } from "react-bootstrap";
 import TicketModal from "./TicketModal";
-import { getAllTrips, search } from "../services/TripService";
-import { mapToHHMM } from "../utils/timeUtils";
 
-function TicketsComponent({query}) {
-  const [data, setData] = useState([])
-
-  useEffect(() => {
-    const hasQuery = query.departure || query.arrival || query.departureDate || query.returnDate
-    
-    if (hasQuery) {
-      search(
-        query.departure,
-        query.arrival,
-        query.departureDate,
-        query.returnDate
-      )
-        .then((response) => {
-          setData(response.data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } else {
-      getAllTrips()
-        .then((response) => {
-          setData(response.data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-    
-  }, [query]);
-
+function TicketsComponent({ data }) {
   function createCard(trip, index) {
     return (
       <Container key={index} className="mb-3 px-0 bg-light">

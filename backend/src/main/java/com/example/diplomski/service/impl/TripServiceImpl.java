@@ -65,11 +65,11 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public List<TripDto> search(String departure, String arrival, LocalDate arrivalDate, LocalDate returnDate) {
+    public List<TripDto> search(String departure, String arrival, LocalDate arrivalDate, LocalDate returnDate, Boolean wifi, Boolean restroom, Boolean ac, Boolean outlet, Boolean reclining, Integer maxPrice, Integer maxDuration) {
         if (departure != null && departure.trim().isEmpty()) departure = null;
         if (arrival != null && arrival.trim().isEmpty()) arrival = null;
 
-        List<Trip> trips = tripRepository.search(departure, arrival, arrivalDate, returnDate);
+        List<Trip> trips = tripRepository.search(departure, arrival, arrivalDate, returnDate, wifi, restroom, ac, outlet, reclining, maxPrice, maxDuration);
         return trips.stream().map((trip) -> TripMapper.mapToTripDto(trip)).collect(Collectors.toList());
 
     }

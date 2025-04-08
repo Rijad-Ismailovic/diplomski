@@ -1,33 +1,63 @@
 import React, { useState } from "react";
 import { Container, Form, Row, Col } from "react-bootstrap";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 
-function FilterComponent() {
-  const [price, setPrice] = useState(300);
+function FilterComponent({numOfProducts}) {
+  const [price, setPrice] = useState(100);
   const [duration, setDuration] = useState(24);
   const [features, setFeatures] = useState({
     wifi: false,
     restroom: false,
     ac: false,
-    power: false,
+    outlet: false,
     reclining: false,
   });
+  const navigate = useNavigate();
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleCheckboxChange = (e) => {
     const { name, checked } = e.target;
     setFeatures((prev) => ({ ...prev, [name]: checked }));
+
+    const newParams = new URLSearchParams(searchParams.toString());
+    if (checked) {
+      newParams.set(name, checked.toString());
+    } else {
+      newParams.delete(name);
+    }
+
+    navigate(`/search?${newParams.toString()}`);
   };
 
   return (
     <Container className="bg-light p-3 rounded shadow-sm border">
-      <h5 className="mb-3">Filter Results</h5>
+      <Row>
+        <Col lg={8}>
+          <h5 className="mb-3">Filter Results</h5>
+        </Col>
+        <Col lg={4}>
+          <p className="text-muted">{numOfProducts} results</p>
+        </Col>
+      </Row>
 
       <Form.Group className="mb-4">
         <Form.Label>Max Price: {price} KM</Form.Label>
         <Form.Range
           min={0}
-          max={300} 
+          max={100}
           value={price}
-          onChange={(e) => setPrice(e.target.value)}
+          onChange={(e) => {
+            setPrice(e.target.value);
+            const newParams = new URLSearchParams(searchParams.toString());
+            newParams.set("maxPrice", e.target.value);
+            navigate(`/search?${newParams.toString()}`);
+          }}
         />
         <Row className="px-1">
           <Col className="text-start">0 KM</Col>
@@ -41,7 +71,12 @@ function FilterComponent() {
           min={1}
           max={24}
           value={duration}
-          onChange={(e) => setDuration(e.target.value)}
+          onChange={(e) => {
+            setDuration(e.target.value);
+            const newParams = new URLSearchParams(searchParams.toString());
+            newParams.set("maxDuration", e.target.value);
+            navigate(`/search?${newParams.toString()}`);
+          }}
         />
         <Row className="px-1">
           <Col className="text-start">1 hr</Col>
@@ -74,8 +109,8 @@ function FilterComponent() {
         <Form.Check
           type="checkbox"
           label="Power Outlets"
-          name="power"
-          checked={features.power}
+          name="outlet"
+          checked={features.outlet}
           onChange={handleCheckboxChange}
         />
         <Form.Check

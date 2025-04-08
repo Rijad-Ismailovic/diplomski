@@ -74,4 +74,19 @@ public class Trip {
 
     @Column(name = "notes")
     private String notes;
+
+    @Column(name = "wifi")
+    private boolean hasWifi;
+
+    @Column(name = "restroom")
+    private boolean hasRestroom;
+
+    @Column(name = "ac")
+    private boolean hasAc;
+
+    @Column(name = "outlet")
+    private boolean hasOutlet;
+
+    @Column(name = "reclining")
+    private boolean hasReclining;
 }
