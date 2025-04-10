@@ -4,7 +4,7 @@ export const mapToHHMM = (minutes) => {
 
   let formatedTime = "";
   if (mm == "0") formatedTime = hh.concat("hr ");
-  else formatedTime = hh.concat("hr ", mm, " min");
+  else formatedTime = hh.concat("hr ", mm, "min");
    
   return formatedTime;
 };

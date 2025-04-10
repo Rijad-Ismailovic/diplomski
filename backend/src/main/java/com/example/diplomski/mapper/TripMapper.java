@@ -5,6 +5,8 @@ import com.example.diplomski.entity.Driver;
 import com.example.diplomski.entity.Trip;
 import com.example.diplomski.entity.Vehicle;
 
+import java.util.stream.Collectors;
+
 public class TripMapper {
     public static TripDto mapToTripDto(Trip trip){
         return new TripDto(

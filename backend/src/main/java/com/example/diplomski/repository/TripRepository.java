@@ -1,5 +1,6 @@
 package com.example.diplomski.repository;
 
+import com.example.diplomski.entity.Location;
 import com.example.diplomski.entity.Trip;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,10 +20,10 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
             "(:outlet IS FALSE OR t.hasOutlet = TRUE) AND" +
             "(:reclining IS FALSE OR t.hasReclining = TRUE) AND " +
             "(:maxPrice IS NULL OR t.price <= :maxPrice) AND " +
-            "(:maxDuration IS NULL OR t.durationMinutes <= :maxDuration)") 
+            "(:maxDuration IS NULL OR t.durationMinutes <= :maxDuration)")
     List<Trip> search(
-            String departure,
-            String arrival,
+            Location departure,
+            Location arrival,
             LocalDate departureDate,
             LocalDate returnDate,
             boolean wifi,
@@ -32,4 +33,5 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
             boolean reclining,
             Integer maxPrice,
             Integer maxDuration);
+
 }

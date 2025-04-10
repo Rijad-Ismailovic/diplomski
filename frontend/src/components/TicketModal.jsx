@@ -1,20 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Modal, Row, Col } from "react-bootstrap";
+import { mapToHHMM } from "../utils/timeUtils";
+import { getStopsByTripId } from "../services/StopServices";
 
-function TicketModal() {
+function TicketModal({ tripInfo }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const stops = [
-    { name: "Sarajevo", time: "08:00 AM", type: "departure" },
-    { name: "Ilidža", time: "08:20 AM" },
-    { name: "Konjic", time: "09:30 AM" },
-    { name: "Jablanica", time: "10:15 AM" },
-    { name: "Mostar East", time: "11:10 AM" },
-    { name: "Mostar", time: "11:15 AM", type: "arrival" },
-  ];
+  let comodities = [];
+  if (tripInfo.hasWifi) comodities.push("Wi-Fi");
+  if (tripInfo.hasRestroom) comodities.push("Restroom");
+  if (tripInfo.hasAc) comodities.push("A&C");
+  if (tripInfo.hasOutlet) comodities.push("Power Outlet");
+  if (tripInfo.hasReclining) comodities.push("Reclining Seats");
+  const comoditiesText = comodities.join(", ");
+
+  const [stops, setStops] = useState([]);
+
+  useEffect(() => {
+    getStopsByTripId(tripInfo.id)
+      .then((response) => {
+        setStops(response.data);
+        console.log(response.data)
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <>
@@ -25,7 +37,9 @@ function TicketModal() {
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>
-            Sarajevo <span className="text-primary">&rarr;</span> Mostar
+            {tripInfo.departureLocation.name}{" "}
+            <span className="text-primary">&rarr;</span>{" "}
+            {tripInfo.arrivalLocation.name}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -33,19 +47,23 @@ function TicketModal() {
             <Col>
               <strong>Departure:</strong>
             </Col>
-            <Col className="text-end">08:00 AM</Col>
+            <Col className="text-end">
+              {tripInfo.departureTime.substr(0, 5)}
+            </Col>
           </Row>
           <Row className="mb-2">
             <Col>
               <strong>Arrival:</strong>
             </Col>
-            <Col className="text-end">11:15 AM</Col>
+            <Col className="text-end">{tripInfo.arrivalTime.substr(0, 5)}</Col>
           </Row>
           <Row className="mb-3">
             <Col>
               <strong>Duration:</strong>
             </Col>
-            <Col className="text-end">3h 15m</Col>
+            <Col className="text-end">
+              {mapToHHMM(tripInfo.durationMinutes)}
+            </Col>
           </Row>
 
           <div className="mb-3 px-2">
@@ -55,9 +73,9 @@ function TicketModal() {
                 <Col xs={1} className="d-flex flex-column align-items-center">
                   <div
                     className={
-                      stop.type === "departure"
+                      stop.type === "DEPARTURE"
                         ? "bg-success"
-                        : stop.type === "arrival"
+                        : stop.type === "ARRIVAL"
                         ? "bg-danger"
                         : "bg-primary"
                     }
@@ -76,7 +94,7 @@ function TicketModal() {
                   )}
                 </Col>
                 <Col xs={6}>
-                  {stop.name}
+                  {stop.locationId.name}
                   {stop.type === "departure" && (
                     <span className="text-success ms-1">(Departure)</span>
                   )}
@@ -85,7 +103,7 @@ function TicketModal() {
                   )}
                 </Col>
                 <Col xs={5} className="text-end text-muted small">
-                  {stop.time}
+                  {stop.time.substr(0, 5)}
                 </Col>
               </Row>
             ))}
@@ -97,19 +115,20 @@ function TicketModal() {
             <Col>
               <strong>Commodities:</strong>
             </Col>
-            <Col className="text-end">Restoroom, A&C, Wi-Fi</Col>
+            <Col className="text-end">{comoditiesText}</Col>
           </Row>
           <Row className="mb-3">
             <Col>
               <strong>Price:</strong>
             </Col>
-            <Col className="text-end text-success fw-bold">€14.50</Col>
+            <Col className="text-end text-success fw-bold">
+              {tripInfo.price} KM
+            </Col>
           </Row>
 
-          <p className="text-muted small">
-            Please arrive at the station at least 15 minutes before departure.
-            Tickets are non-refundable.
-          </p>
+          {tripInfo.notes && (
+            <p className="text-muted small">{tripInfo.notes}</p>
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

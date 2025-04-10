@@ -15,7 +15,7 @@ function TicketsComponent({ data }) {
               className="px-0 rounded overflow-hidden"
             >
               <Image
-                src={trip.image}
+                src={trip.arrivalLocation.imagePath}
                 fluid
                 className="w-100 h-100 object-fit-cover"
                 style={{ filter: "blur(0.3px)" }}
@@ -24,9 +24,9 @@ function TicketsComponent({ data }) {
 
             <Col className="flex-grow-1 d-flex flex-column justify-content-between">
               <Card.Title className="mb-2 fs-6">
-                {trip.departureLocation}{" "}
+                {trip.departureLocation.name}{" "}
                 <span className="text-primary">&rarr;</span>{" "}
-                {trip.arrivalLocation}
+                {trip.arrivalLocation.name}
               </Card.Title>
               <Row className="px-0 small text-muted mt-2">
                 {/* <p className="mb-0">{mapToHHMM(trip.durationMinutes)}</p> */}
@@ -40,7 +40,7 @@ function TicketsComponent({ data }) {
 
             <Col className="d-flex flex-column align-items-end mt-auto">
               <p className="mb-1 fw-bold">{trip.price} KM</p>
-              <TicketModal />
+              <TicketModal tripInfo={trip} />
             </Col>
           </CardBody>
         </Card>

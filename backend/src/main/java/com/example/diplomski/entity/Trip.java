@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,8 +30,9 @@ public class Trip {
     @JoinColumn(name = "driver_id")
     private Driver driver;
 
-    @Column(name = "departure_location")
-    private String departureLocation;
+    @ManyToOne
+    @JoinColumn(name = "departure_location_id")
+    private Location departureLocation;
 
     @Column(name = "departure_time")
     private LocalTime departureTime;
@@ -38,8 +40,9 @@ public class Trip {
     @Column(name = "departure_date")
     private LocalDate departureDate;
 
-    @Column(name = "arrival_location")
-    private String arrivalLocation;
+    @ManyToOne
+    @JoinColumn(name = "arrival_location_id")
+    private Location arrivalLocation;
 
     @Column(name = "arrival_time")
     private LocalTime arrivalTime;

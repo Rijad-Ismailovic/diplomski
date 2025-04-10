@@ -1,6 +1,7 @@
 package com.example.diplomski.dto;
 
 import com.example.diplomski.common.enums.TripStatus;
+import com.example.diplomski.entity.Location;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,10 +20,10 @@ public class TripDto {
     private Long id;
     private Long vehicleId;
     private Long driverId;
-    private String departureLocation;
+    private Location departureLocation;
     private LocalTime departureTime;
     private LocalDate departureDate;
-    private String arrivalLocation;
+    private Location arrivalLocation;
     private LocalTime arrivalTime;
     private LocalDate arrivalDate;
     private LocalDate returnDate;

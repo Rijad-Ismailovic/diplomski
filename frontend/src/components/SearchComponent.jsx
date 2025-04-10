@@ -1,46 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Form, Button, Row, Col, Dropdown } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { getAllLocations } from "../services/LocationService";
 
 function SearchComponent() {
-  const bosnianCities = [
-    "Sarajevo",
-    "Banja Luka",
-    "Tuzla",
-    "Zenica",
-    "Mostar",
-    "Bihać",
-    "Brčko",
-    "Prijedor",
-    "Doboj",
-    "Bijeljina",
-    "Trebinje",
-    "Travnik",
-    "Cazin",
-    "Gradačac",
-    "Goražde",
-    "Zvornik",
-  ];
-
   const navigator = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [locations, setLocations] = useState([]);
 
-  const [departureLocation, setDepartureLocation] = useState("");
-  const [arrivalLocation, setArrivalLocation] = useState("");
-  const [departureDate, setDepartureDate] = useState("");
-  const [returnDate, setReturnDate] = useState("");
+  const [departureLocation, setDepartureLocation] = useState(
+    searchParams.get("departure") || ""
+  );
+  const [arrivalLocation, setArrivalLocation] = useState(
+    searchParams.get("arrival") || ""
+  );
+  const [departureDate, setDepartureDate] = useState(
+    searchParams.get("departureDate") || ""
+  );
+  const [returnDate, setReturnDate] = useState(
+    searchParams.get("returnDate") || ""
+  );
+
+  useEffect(() => {
+    getAllLocations()
+      .then((response) => {
+        setLocations(response.data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   function handleSearch(e) {
     e.preventDefault();
-    
-    const params = new URLSearchParams()
 
-    if (departureLocation) params.append("departure", departureLocation)
-    if (arrivalLocation) params.append("arrival", arrivalLocation)
-    if (departureDate) params.append("departureDate", departureDate)
-    if (returnDate) params.append("returnDate", returnDate)
-    navigator(
-      `/search?${params.toString()}`
-    );
+    const params = new URLSearchParams();
+
+    if (departureLocation) params.append("departure", departureLocation);
+    if (arrivalLocation) params.append("arrival", arrivalLocation);
+    if (departureDate) params.append("departureDate", departureDate);
+    if (returnDate) params.append("returnDate", returnDate);
+    navigator(`/search?${params.toString()}`);
   }
 
   return (
@@ -60,9 +58,10 @@ function SearchComponent() {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                {bosnianCities.map((city) => (
-                  <Dropdown.Item key={city} eventKey={city}>
-                    {city}
+                <Dropdown.Item eventKey="">Select a city</Dropdown.Item>
+                {locations.map((location) => (
+                  <Dropdown.Item key={location.id} eventKey={location.name}>
+                    {location.name}
                   </Dropdown.Item>
                 ))}
               </Dropdown.Menu>
@@ -82,9 +81,10 @@ function SearchComponent() {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                {bosnianCities.map((city) => (
-                  <Dropdown.Item key={city} eventKey={city}>
-                    {city}
+                <Dropdown.Item eventKey="">Select a city</Dropdown.Item>
+                {locations.map((location) => (
+                  <Dropdown.Item key={location.id} eventKey={location.name}>
+                    {location.name}
                   </Dropdown.Item>
                 ))}
               </Dropdown.Menu>
@@ -96,6 +96,7 @@ function SearchComponent() {
             <Form.Control
               type="date"
               className="border border-dark bg-white text-dark"
+              value={departureDate}
               onChange={(e) => setDepartureDate(e.target.value)}
             />
           </Col>
@@ -105,6 +106,7 @@ function SearchComponent() {
             <Form.Control
               type="date"
               className="border border-dark bg-white text-dark"
+              value={returnDate}
               onChange={(e) => setReturnDate(e.target.value)}
             />
           </Col>

@@ -61,8 +61,6 @@ public class TripController {
                                     @RequestParam(name = "reclining", required = false) boolean reclining,
                                     @RequestParam(name = "maxPrice", required = false) Integer maxPrice,
                                     @RequestParam(name = "maxDuration", required = false) Integer maxDuration){
-        System.out.println(maxPrice);
-        System.out.println(maxDuration);
         List<TripDto> trips = tripService.search(departureLocation, arrivalLocation, departureDate, returnDate, wifi, restroom, ac, outlet, reclining, maxPrice, maxDuration);
         return ResponseEntity.ok(trips);
     }
