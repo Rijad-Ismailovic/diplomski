@@ -11,7 +11,7 @@ function NavbarComponent() {
         <Navbar.Toggle aria-controls="navbar-nav " />
         <Navbar.Collapse id="navbar-nav">
           <Nav className="me-auto mb-2 mb-lg-0 ms-lg-4 ">
-            <Nav.Link href="#!" className="text-white" active>
+            <Nav.Link href="/" className="text-white" active>
               Home
             </Nav.Link>
             <Nav.Link href="#!" className="text-white">

@@ -6,16 +6,37 @@ import FooterComponent from "./components/FooterComponent";
 import Homepage from "./pages/Homepage";
 import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import SearchResults from "./pages/SearchResults";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Homepage />}></Route>
-        <Route path="/search" element={<SearchResults />}></Route>
-        <Route path="/details/:id" element={<Homepage />} />
+        <Route
+          path="/"
+          element={
+            <>
+              <Homepage />
+              <FooterComponent />
+            </>
+          }
+        ></Route>
+
+        <Route
+          path="/search"
+          element={
+            <>
+              <SearchResults />
+              <FooterComponent />
+            </>
+          }
+        ></Route>
+
+        <Route path="/login" element={<LoginPage />} />
+
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
-      <FooterComponent />
     </BrowserRouter>
   );
 }

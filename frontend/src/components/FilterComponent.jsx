@@ -38,10 +38,10 @@ function FilterComponent({numOfProducts}) {
   return (
     <Container className="bg-light p-3 rounded shadow-sm border">
       <Row>
-        <Col lg={8}>
+        <Col lg={7}>
           <h5 className="mb-3">Filter Results</h5>
         </Col>
-        <Col lg={4}>
+        <Col lg={5}>
           <p className="text-muted">{numOfProducts} results</p>
         </Col>
       </Row>
