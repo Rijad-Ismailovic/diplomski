@@ -8,10 +8,12 @@ import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import SearchResults from "./pages/SearchResults";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <BrowserRouter>
+      <Toaster />
       <Routes>
         <Route
           path="/"

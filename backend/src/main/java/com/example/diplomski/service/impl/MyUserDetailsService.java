@@ -17,11 +17,20 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = repository.findByUsername(username);
-
-        if (user == null || !user.getUsername().equals(username)) { // jer su db queries case insesntive
-            System.out.println("User not found");
-            throw new UsernameNotFoundException("User not found");
+        // username je zapravo usernameOrEmail
+        User user;
+        if(username.contains("@")){
+            user = repository.findByEmail(username);
+            if (user == null || !user.getEmail().equals(username)) { // jer su db queries case insesntive
+                System.out.println("User not found");
+                throw new UsernameNotFoundException("User not found");
+            }
+        }else {
+            user = repository.findByUsername(username);
+            if (user == null || !user.getUsername().equals(username)) { // jer su db queries case insesntive
+                System.out.println("User not found");
+                throw new UsernameNotFoundException("User not found");
+            }
         }
 
         return new UserPrincipal(user);

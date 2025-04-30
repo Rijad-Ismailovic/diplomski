@@ -1,8 +1,55 @@
-import React from "react";
 import { Card, Form, Button, Row, Col, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { register } from "../services/UserService";
+import toast, { Toaster } from "react-hot-toast";
+import { useState } from "react";
+import PasswordStrengthBar from "react-password-strength-bar";
+import { validateRegistrationForm } from "../utils/validation";
 
 function RegisterComponent() {
+  const navigate = useNavigate();
+
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [formErrors, setFormErrors] = useState({
+    fullName: "",
+    email: "",
+    username: "",
+    password: "",
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const payload = {
+      fullName: fullName,
+      email: email,
+      username: username,
+      password: password,
+    };
+    const { isValid, errors } = validateRegistrationForm(
+      fullName,
+      email,
+      username,
+      password
+    );
+    setFormErrors(errors)
+    if (isValid) {
+      register(payload)
+        .then((response) => {
+          console.log(response);
+          navigate("/login");
+          toast.success("Succesfully registered");
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(error.response.data);
+        });
+    }
+  }
+
   return (
     <Container
       fluid
@@ -21,7 +68,14 @@ function RegisterComponent() {
                     type="text"
                     size="md"
                     placeholder="Enter full name"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
                   />
+                  {formErrors.fullName && (
+                    <Form.Text className="text-danger">
+                      {formErrors.fullName}
+                    </Form.Text>
+                  )}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formEmail">
@@ -30,7 +84,30 @@ function RegisterComponent() {
                     type="email"
                     size="md"
                     placeholder="Enter email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
+                  {formErrors.email && (
+                    <Form.Text className="text-danger">
+                      {formErrors.email}
+                    </Form.Text>
+                  )}
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formEmail">
+                  <Form.Label>Username</Form.Label>
+                  <Form.Control
+                    type="text"
+                    size="md"
+                    placeholder="Enter username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                  {formErrors.username && (
+                    <Form.Text className="text-danger">
+                      {formErrors.username}
+                    </Form.Text>
+                  )}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formPassword">
@@ -39,7 +116,15 @@ function RegisterComponent() {
                     type="password"
                     size="md"
                     placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
+                  {formErrors.password && (
+                    <Form.Text className="text-danger">
+                      {formErrors.password}
+                    </Form.Text>
+                  )}
+                  <PasswordStrengthBar password={password} />
                 </Form.Group>
 
                 <Form.Check
@@ -54,6 +139,7 @@ function RegisterComponent() {
                   size="md"
                   className="w-100 mb-3 mt-3"
                   type="submit"
+                  onClick={handleSubmit}
                 >
                   Register
                 </Button>

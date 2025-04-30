@@ -1,5 +1,6 @@
 package com.example.diplomski.service.impl;
 
+import com.example.diplomski.entity.UserPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
@@ -37,11 +38,11 @@ public class JWTService {
 
         return Jwts.builder()
                 .claims()
-                .add(claims)
-                .subject(username)
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+                .add("roles", "ROLE_USER") // TODO make it dynamic
                 .and()
+                .subject(username)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30)) // 30 min
                 .signWith(getKey())
                 .compact();
     }
@@ -69,11 +70,14 @@ public class JWTService {
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
-        final String userName = extractUsername(token);
-        System.out.println("userName " + userName);
-        System.out.println("userDetails userName " + userDetails.getUsername());
-        System.out.println("is token expired " + isTokenExpired(token));
-        return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        final String usernameOrEmail = extractUsername(token);
+        if(usernameOrEmail.contains("@")){
+            String email = ((UserPrincipal) userDetails).getEmail();
+            return usernameOrEmail.equals(email) && !isTokenExpired(token);
+        }
+        else{
+            return (usernameOrEmail.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        }
     }
 
     private boolean isTokenExpired(String token){

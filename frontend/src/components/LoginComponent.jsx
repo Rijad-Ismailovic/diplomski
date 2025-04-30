@@ -1,8 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Form, Button, Row, Col, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../services/UserService";
+import toast from "react-hot-toast";
 
 function LoginComponent() {
+  const navigate = useNavigate();
+  const [usernameOrEmail, setUsernameOrEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const credentials = {
+      usernameOrEmail: usernameOrEmail,
+      password: password,
+    };
+    login(credentials)
+      .then((response) => {
+        console.log(response);
+        localStorage.setItem("jwt", response.data)
+        navigate("/");
+        toast.success("Succesfully logged in");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Invalid credentials");
+      });
+  }
+
   return (
     <Container
       fluid
@@ -16,11 +41,13 @@ function LoginComponent() {
 
               <Form>
                 <Form.Group className="mb-3" controlId="formEmail">
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label>Username or Email</Form.Label>
                   <Form.Control
-                    type="email"
+                    type="text"
                     size="md"
-                    placeholder="Enter email"
+                    placeholder="Enter username or email"
+                    value={usernameOrEmail}
+                    onChange={(e) => setUsernameOrEmail(e.target.value)}
                   />
                 </Form.Group>
 
@@ -30,6 +57,8 @@ function LoginComponent() {
                     type="password"
                     size="md"
                     placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </Form.Group>
 
@@ -45,6 +74,7 @@ function LoginComponent() {
                   size="md"
                   className="w-100 mb-3 mt-3"
                   type="submit"
+                  onClick={handleSubmit}
                 >
                   Login
                 </Button>
