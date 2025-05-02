@@ -23,7 +23,6 @@ function TicketModal({ tripInfo }) {
     getStopsByTripId(tripInfo.id)
       .then((response) => {
         setStops(response.data);
-        console.log(response.data)
       })
       .catch((error) => console.log(error));
   }, []);

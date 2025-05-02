@@ -1,19 +1,12 @@
 import axios from "axios";
 
+const token = localStorage.getItem("jwt");
+
 const api = axios.create({
   baseURL: "http://localhost:8080/api",
-});
-
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      config.headers = config.headers || {};
-      config.headers["Authorization"] = `Bearer ${token}`;
-    }
-    return config;
+  headers: {
+    Authorization: token ? `Bearer ${token}` : undefined,
   },
-  (error) => Promise.reject(error)
-);
+});
 
 export default api;
