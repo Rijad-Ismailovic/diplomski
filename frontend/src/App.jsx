@@ -9,6 +9,7 @@ import SearchResults from "./pages/SearchResults";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { Toaster } from "react-hot-toast";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -24,7 +25,6 @@ function App() {
             </>
           }
         ></Route>
-
         <Route
           path="/search"
           element={
@@ -34,6 +34,7 @@ function App() {
             </>
           }
         ></Route>
+        <Route path="/profile" element={<Profile />} />
 
         <Route path="/login" element={<LoginPage />} />
 

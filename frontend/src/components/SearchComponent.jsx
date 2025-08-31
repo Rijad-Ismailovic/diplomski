@@ -91,7 +91,7 @@ function SearchComponent() {
             </Dropdown>
           </Col>
 
-          <Col xs={12} sm={6} md={2}>
+          <Col xs={12} sm={6} md={3}>
             <Form.Label>Departure date</Form.Label>
             <Form.Control
               type="date"
@@ -101,7 +101,7 @@ function SearchComponent() {
             />
           </Col>
 
-          <Col xs={12} sm={6} md={2}>
+          {/* <Col xs={12} sm={6} md={2}>
             <Form.Label>Return date</Form.Label>
             <Form.Control
               type="date"
@@ -109,9 +109,9 @@ function SearchComponent() {
               value={returnDate}
               onChange={(e) => setReturnDate(e.target.value)}
             />
-          </Col>
+          </Col> */}
 
-          <Col xs={12} md={2} className="d-flex align-items-end">
+          <Col xs={12} md={3} className="d-flex align-items-end">
             <Button variant="primary" type="submit" className="w-100">
               Search Tickets
             </Button>

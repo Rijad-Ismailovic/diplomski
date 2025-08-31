@@ -2,6 +2,7 @@ package com.example.diplomski.controller;
 
 import com.example.diplomski.dto.LocationDto;
 import com.example.diplomski.service.LocationService;
+import com.example.diplomski.service.impl.JWTService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,8 @@ import java.util.List;
 @RequestMapping("api/locations")
 public class LocationController {
     private LocationService LocationService;
+    private JWTService jwtService;
+
     @RequestMapping("/{id}")
     public ResponseEntity<LocationDto> getLocationById(@PathVariable("id") Long id){
         LocationDto locationDto = LocationService.getLocationById(id);

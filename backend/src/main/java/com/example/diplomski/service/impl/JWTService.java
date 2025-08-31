@@ -24,13 +24,15 @@ public class JWTService {
     private String secretKey;
 
     public JWTService(){
-        try{
-            KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
-            SecretKey sk = keyGen.generateKey();
-            secretKey = Base64.getEncoder().encodeToString(sk.getEncoded());
-        } catch(NoSuchAlgorithmException e){
-            throw new RuntimeException(e);
-        }
+        //try{
+        //   KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
+        // SecretKey sk = keyGen.generateKey();
+        //    secretKey = Base64.getEncoder().encodeToString(sk.getEncoded());
+        //    System.out.println("SECRET KEY !!!! :"+ secretKey);
+        //} catch(NoSuchAlgorithmException e){
+        //    throw new RuntimeException(e);
+        //}
+        secretKey = "nN3YIGNpIB81VcPqWysP7pHCR4IG5YQnTeIibUABYbY=";
     }
 
     public String generateToken(String username){
@@ -48,8 +50,9 @@ public class JWTService {
     }
 
     public SecretKey getKey(){
-        byte[] bytes = Decoders.BASE64.decode(secretKey); // string -> bytes
-        return Keys.hmacShaKeyFor(bytes); // bytes -> suitable key for hmacsha
+        byte[] bytes = Decoders.BASE64.decode(secretKey);
+        System.out.println("Decoded key length = " + bytes.length);
+        return Keys.hmacShaKeyFor(bytes);
     }
 
     public String extractUsername(String token) {
@@ -86,5 +89,9 @@ public class JWTService {
 
     private Date extractExpiration(String token){
         return extractClaim(token, Claims::getExpiration);
+    }
+
+    public String extractSub(String token) {
+        return extractClaim(token, Claims::getSubject);
     }
 }

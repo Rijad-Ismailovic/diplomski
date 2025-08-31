@@ -5,6 +5,14 @@ import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { validateRegistrationForm } from "../utils/validation";
+import {
+  CitySelect,
+  CountrySelect,
+  StateSelect,
+  LanguageSelect,
+  RegionSelect,
+  PhonecodeSelect,
+} from "react-country-state-city";
 
 function RegisterComponent() {
   const navigate = useNavigate();
@@ -35,16 +43,14 @@ function RegisterComponent() {
       username,
       password
     );
-    setFormErrors(errors)
+    setFormErrors(errors);
     if (isValid) {
       register(payload)
         .then((response) => {
-          console.log(response);
           navigate("/login");
           toast.success("Succesfully registered");
         })
         .catch((error) => {
-          console.log(error);
           toast.error(error.response.data);
         });
     }
@@ -67,7 +73,7 @@ function RegisterComponent() {
                   <Form.Control
                     type="text"
                     size="md"
-                    placeholder="Enter full name"
+                    placeholder="Enter Full Name"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                   />
@@ -126,13 +132,6 @@ function RegisterComponent() {
                   )}
                   <PasswordStrengthBar password={password} />
                 </Form.Group>
-
-                <Form.Check
-                  className="d-flex justify-content-start mb-3"
-                  type="checkbox"
-                  id="formRemember"
-                  label="Remember password"
-                />
 
                 <Button
                   variant="primary"

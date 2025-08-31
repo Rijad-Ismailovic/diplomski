@@ -2,12 +2,50 @@ import { useEffect, useState } from "react";
 import { Button, Modal, Row, Col } from "react-bootstrap";
 import { mapToHHMM } from "../utils/timeUtils";
 import { getStopsByTripId } from "../services/StopServices";
+import { reserveTicket } from "../services/TicketService";
+import toast from "react-hot-toast";
 
 function TicketModal({ tripInfo }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const toTicketPayload = (trip) => ({
+    driverId: trip.driverId,
+    departureLocation: trip.departureLocation,
+    departureDate: trip.departureDate,
+    departureTime:
+      trip.departureTime?.length === 5
+        ? `${trip.departureTime}:00`
+        : trip.departureTime,
+    arrivalLocation: trip.arrivalLocation,
+    arrivalDate: trip.arrivalDate,
+    arrivalTime:
+      trip.arrivalTime?.length === 5
+        ? `${trip.arrivalTime}:00`
+        : trip.arrivalTime,
+    distanceKm: trip.distanceKm,
+    durationMinutes: trip.durationMinutes,
+    price: trip.price,
+    hasWifi: !!trip.hasWifi,
+    hasRestroom: !!trip.hasRestroom,
+    hasAc: !!trip.hasAc,
+    hasOutlet: !!trip.hasOutlet,
+    hasReclining: !!trip.hasReclining,
+  });
+
+  const handleReserveTicket = async () => {
+    try {
+      const payload = toTicketPayload(tripInfo);
+      await reserveTicket(payload);
+      toast.success("Succesfully booked ticket!");
+      setShow(false);
+    } catch {
+      toast.error("Error while reserving ticket");
+      // error UI...
+    }
+  };
 
   let comodities = [];
   if (tripInfo.hasWifi) comodities.push("Wi-Fi");
@@ -66,7 +104,6 @@ function TicketModal({ tripInfo }) {
           </Row>
 
           <div className="mb-3 px-2">
-            <h6 className="text-muted mb-2">Stops Along the Route</h6>
             {stops.map((stop, index) => (
               <Row key={index} className="align-items-center">
                 <Col xs={1} className="d-flex flex-column align-items-center">
@@ -133,8 +170,8 @@ function TicketModal({ tripInfo }) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="success" onClick={handleClose}>
-            Buy
+          <Button variant="success" onClick={handleReserveTicket}>
+            Reserve ticket
           </Button>
         </Modal.Footer>
       </Modal>

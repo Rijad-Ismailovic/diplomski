@@ -1,7 +1,10 @@
 import React from "react";
-import { Container, Image as RBImage} from "react-bootstrap";
+import { Container, Image as RBImage } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
 
 function ExploreCountry() {
+  const navigate = useNavigate()
   const currentCountry = "Bosnia and Hercegovina";
   const data = [
     {
@@ -12,7 +15,7 @@ function ExploreCountry() {
     {
       title: "Kušlat",
       image:
-        "https://muftijstvotz.ba/new/wp-content/uploads/2023/01/KuslatdzamijaZvornik_1_WEB.jpg",
+        "https://raport.ba/wp-content/uploads/2022/04/kuslat-dzamija-1.jpg",
     },
     {
       title: "Tešanj",
@@ -59,6 +62,9 @@ function ExploreCountry() {
         className="px-0 overflow-hidden text-center flex-shrink-0 "
         style={{ width: "150px" }}
         key={index}
+        onClick={() => {
+          navigate("/search?arrival=" + location.title);
+        }}
       >
         <Container className="px-0" style={{ height: "150px" }}>
           <RBImage

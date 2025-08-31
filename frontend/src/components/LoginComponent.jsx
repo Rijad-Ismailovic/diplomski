@@ -17,13 +17,11 @@ function LoginComponent() {
     };
     login(credentials)
       .then((response) => {
-        console.log(response);
         localStorage.setItem("jwt", response.data)
         navigate("/");
         toast.success("Succesfully logged in");
       })
       .catch((error) => {
-        console.log(error);
         toast.error("Invalid credentials");
       });
   }
@@ -34,7 +32,7 @@ function LoginComponent() {
       className="d-flex justify-content-center align-items-center min-vh-100"
     >
       <Row className="w-100 justify-content-center">
-        <Col xs={10} sm={8} md={6} lg={3}>
+        <Col xs={10} sm={8} md={6} lg={4} xl={3}>
           <Card className="p-4 shadow">
             <Card.Body>
               <h3 className="mb-4 text-center">Login</h3>
