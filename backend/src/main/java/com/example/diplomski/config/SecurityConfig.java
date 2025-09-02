@@ -53,8 +53,8 @@ public class SecurityConfig {
     //             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
     //             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
     //             .build();
-
-    @Bean
+    // }
+     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
@@ -71,7 +71,6 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
-}
     }
 
     /*@Bean
