@@ -1,7 +1,6 @@
 package com.example.diplomski.service.impl;
 
 import com.example.diplomski.dto.TicketDto;
-import com.example.diplomski.entity.Location;
 import com.example.diplomski.entity.User;
 import com.example.diplomski.repository.LocationRepository;
 import com.example.diplomski.repository.UserRepository;
@@ -32,7 +31,7 @@ public class EmailService {
                         @Autowired(required = false) JavaMailSender mailSender) {
         this.userRepository = userRepository;
         this.locationRepository = locationRepository;
-        this.mailSender = mailSender; // may be null
+        this.mailSender = mailSender;
     }
 
     /** Public API: caller passes userId. We fetch user -> email and send. */
@@ -52,17 +51,11 @@ public class EmailService {
             return;
         }
 
-        // Enrich ticket DTO with user info if missing
-        if (ticket != null) {
-            if (!StringUtils.hasText(ticket.getFullName())) ticket.setFullName(user.getFullName());
-            if (!StringUtils.hasText(ticket.getUsername())) ticket.setUsername(user.getUsername());
-        }
-
         String subject = "Your bus ticket"
                 + ((ticket != null && ticket.getId() != null) ? (" #" + ticket.getId()) : "");
 
-        String fromLocationName = String.valueOf(this.locationRepository.findById(ticket.getDepartureLocation().getId()));
-        String toLocationName = String.valueOf(this.locationRepository.findById(ticket.getArrivalLocation().getId()));
+        String fromLocationName = String.valueOf(locationRepository.findById(ticket.getDepartureLocation().getId()));
+        String toLocationName = String.valueOf(locationRepository.findById(ticket.getArrivalLocation().getId()));
 
         String html = (ticket != null) ? buildGlobalBusTicketHtml(ticket, fromLocationName, toLocationName)
                 : "<p>Hello " + (user.getFullName() == null ? "there" : user.getFullName())
@@ -100,7 +93,57 @@ public class EmailService {
         mailSender.send(msg);
     }
 
-    // --- keep buildGlobalBusTicketHtml, sendHtmlContactUsEmail, sendReviewNotificationEmail, etc. ---
-    // Just add mailSender == null checks in each public method before sending.
+    // ---------------------------
+    //  HELPER METHODS
+    // ---------------------------
+
+    public static String buildGlobalBusTicketHtml(TicketDto t, String fromLocationName, String toLocationName) {
+        String passenger = safe(t.getFullName());
+        String ticketId  = t.getId() != null ? String.valueOf(t.getId()) : "—";
+        String depDate   = t.getDepartureDate() != null ? t.getDepartureDate().toString() : "";
+        String depTime   = t.getDepartureTime() != null ? t.getDepartureTime().toString() : "";
+        String arrDate   = t.getArrivalDate() != null ? t.getArrivalDate().toString() : "";
+        String arrTime   = t.getArrivalTime() != null ? t.getArrivalTime().toString() : "";
+        String price     = formatPrice(t.getPrice());
+
+        return String.format("<html><body><h1>Ticket %s</h1><p>Passenger: %s</p><p>From %s to %s</p>"
+                + "<p>Departure: %s %s</p><p>Arrival: %s %s</p><p>Price: %s</p></body></html>",
+                ticketId, passenger, fromLocationName, toLocationName,
+                depDate, depTime, arrDate, arrTime, price);
+    }
+
+    public void sendHtmlContactUsEmail(String fullName, String fromEmail, String body) throws MessagingException {
+        if (mailSender == null) {
+            log.warn("No JavaMailSender configured. Contact email not sent.");
+            return;
+        }
+        MimeMessage msg = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(
+                msg, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name()
+        );
+        helper.setFrom("rijad.isma@gmail.com");
+        helper.setTo("rijad.isma@gmail.com");
+        helper.setSubject("New Contact Us Message from " + fullName);
+        helper.setText("Name: " + fullName + "\nEmail: " + fromEmail + "\n\n" + body, true);
+        mailSender.send(msg);
+    }
+
+    public void sendReviewNotificationEmail(String username, Long ticketId, int rating, String comment) throws MessagingException {
+        if (mailSender == null) {
+            log.warn("No JavaMailSender configured. Review notification not sent.");
+            return;
+        }
+        MimeMessage msg = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(
+                msg, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name()
+        );
+        helper.setFrom("rijad.isma@gmail.com");
+        helper.setTo("rijad.isma@gmail.com");
+        helper.setSubject("New Review for Ticket #" + ticketId);
+        helper.setText("User: " + username + "\nRating: " + rating + "\nComment: " + comment, true);
+        mailSender.send(msg);
+    }
+
     private static String safe(String s) { return s == null ? "" : s; }
+    private static String formatPrice(double p) { return p <= 0 ? "—" : String.format("€%.2f", p); }
 }
