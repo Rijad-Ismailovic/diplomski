@@ -38,21 +38,40 @@ public class SecurityConfig {
     @Autowired
     private JWTFilter jwtFilter;
 
+    // @Bean
+    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    //     return http
+    //             .csrf(customizer -> customizer.disable())
+    //             .cors(Customizer.withDefaults())
+    //             .authorizeHttpRequests(request -> request
+    //                     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+    //                     .requestMatchers("/api/register", "/api/login", "/api/locations/**", "/api/trips/**", "/api/stops/**", "/api/user", "/api/user/update", "api/emails/contact", "api/reviews/**").permitAll()
+    //                     //.anyRequest().authenticated())
+    //                     .anyRequest().permitAll()
+    //             //.httpBasic(Customizer.withDefaults()) // for rest api access - postman
+    //             .httpBasic().disable()
+    //             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+    //             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+    //             .build();
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(customizer -> customizer.disable())
+                .csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/register", "/api/login", "/api/locations/**", "/api/trips/**", "/api/stops/**", "/api/user", "/api/user/update", "api/emails/contact", "api/reviews/**").permitAll()
-                        //.anyRequest().authenticated())
-                        .anyRequest().permitAll()
-                //.httpBasic(Customizer.withDefaults()) // for rest api access - postman
-                .httpBasic().disable()
+                        .requestMatchers("/api/register", "/api/login",
+                                        "/api/locations/**", "/api/trips/**", "/api/stops/**",
+                                        "/api/user", "/api/user/update",
+                                        "/api/emails/contact", "/api/reviews/**").permitAll()
+                        .anyRequest().permitAll() // everything else allowed
+                )
+                .httpBasic(httpBasic -> httpBasic.disable()) // ✅ disable HTTP Basic login popup
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
+}
     }
 
     /*@Bean
