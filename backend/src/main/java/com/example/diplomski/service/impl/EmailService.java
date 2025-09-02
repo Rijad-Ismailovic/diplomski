@@ -23,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@ConditionalOnBean(JavaMailSender.class)
 public class EmailService {
 
     private final JavaMailSender mailSender;
