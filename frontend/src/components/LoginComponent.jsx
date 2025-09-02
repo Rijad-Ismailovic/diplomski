@@ -17,7 +17,7 @@ function LoginComponent() {
     };
     login(credentials)
       .then((response) => {
-        localStorage.setItem("jwt", response.data)
+        localStorage.setItem("jwt", response.data);
         navigate("/");
         toast.success("Succesfully logged in");
       })
@@ -60,13 +60,6 @@ function LoginComponent() {
                   />
                 </Form.Group>
 
-                <Form.Check
-                  className="d-flex justify-content-start mb-3"
-                  type="checkbox"
-                  id="formRemember"
-                  label="Remember password"
-                />
-
                 <Button
                   variant="primary"
                   size="md"
@@ -80,27 +73,6 @@ function LoginComponent() {
                 <Container className="text-center">
                   <Link to={"/register"}>Dont have an account? Sign in</Link>
                 </Container>
-
-                <hr className="my-4" />
-
-                <Button
-                  size="md"
-                  className="w-100 mb-2"
-                  style={{ backgroundColor: "#dd4b39", border: "none" }}
-                  type="button"
-                >
-                  <i className="fab fa-google me-2"></i> Sign in with Google
-                </Button>
-
-                <Button
-                  size="md"
-                  className="w-100"
-                  style={{ backgroundColor: "#3b5998", border: "none" }}
-                  type="button"
-                >
-                  <i className="fab fa-facebook-f me-2"></i> Sign in with
-                  Facebook
-                </Button>
               </Form>
             </Card.Body>
           </Card>
