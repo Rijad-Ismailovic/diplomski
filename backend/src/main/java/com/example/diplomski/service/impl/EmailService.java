@@ -23,14 +23,17 @@ import java.time.format.DateTimeFormatter;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@ConditionalOnBean(JavaMailSender.class)
 public class EmailService {
 
     private final JavaMailSender mailSender;
     private final UserRepository userRepository;
     private final LocationRepository locationRepository;
 
-
+     public EmailService(@Autowired(required = false) JavaMailSender mailSender,
+                        UserRepository userRepository) {
+        this.mailSender = mailSender;
+        this.userRepository = userRepository;
+    }
 
     /** Public API: caller passes userId. We fetch user -> email and send. */
     public void emailTicketToUser(Long userId, TicketDto ticket) throws MessagingException {
