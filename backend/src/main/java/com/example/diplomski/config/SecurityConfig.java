@@ -46,7 +46,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/register", "/api/login", "/api/locations/**", "/api/trips/**", "/api/stops/**", "/api/user", "/api/user/update", "api/emails/contact", "api/reviews/**").permitAll()
-                        .anyRequest().authenticated())
+                        //.anyRequest().authenticated())
+                        .anyRequest().permitAll()
                 //.httpBasic(Customizer.withDefaults()) // for rest api access - postman
                 .httpBasic().disable()
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
