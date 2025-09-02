@@ -48,7 +48,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/register", "/api/login", "/api/locations/**", "/api/trips/**", "/api/stops/**", "/api/user", "/api/user/update", "api/emails/contact", "api/reviews/**").permitAll()
                         .anyRequest().authenticated())
                 //.httpBasic(Customizer.withDefaults()) // for rest api access - postman
-                .httpBasic(http -> http.disable()):
+                .httpBasic().disable()
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
